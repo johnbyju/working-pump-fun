@@ -1,0 +1,642 @@
+/* CSS Module for Landing Page */
+
+/* Header / Navbar */
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #fff 0%, hsl(var(--accent-purple)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.navLink {
+  color: rgba(241, 241, 246, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navLink:hover {
+  color: hsl(var(--accent-cyan));
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none; /* simple mobile fallback, buy button can stay or be hidden */
+  }
+}
+
+/* Hero Section */
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: center;
+  padding: 4rem 0 2rem 0;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tagline {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: hsl(var(--accent-cyan));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.taglineDot {
+  width: 8px;
+  height: 8px;
+  background-color: hsl(var(--accent-cyan));
+  border-radius: 50%;
+  box-shadow: 0 0 8px hsl(var(--accent-cyan));
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.heroTitle {
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.heroDesc {
+  font-size: 1.15rem;
+  color: rgba(241, 241, 246, 0.8);
+  max-width: 600px;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* CA Copier Dashboard */
+.caContainer {
+  background: rgba(13, 13, 20, 0.8);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 550px;
+  margin-top: 1rem;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.caContainer:hover {
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 4px 25px rgba(6, 182, 212, 0.1);
+}
+
+.caHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.caLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(241, 241, 246, 0.5);
+}
+
+.caNetwork {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: hsl(var(--accent-purple));
+  background: rgba(139, 92, 246, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.caValueRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.caValue {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: hsl(var(--accent-cyan));
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  width: 100%;
+}
+
+.copyBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.copyBtn:hover {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: hsl(var(--accent-cyan));
+  color: hsl(var(--accent-cyan));
+}
+
+.copySuccessMessage {
+  position: absolute;
+  right: 1.5rem;
+  top: -12px;
+  background: hsl(var(--accent-cyan));
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4);
+  animation: slideIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideIn {
+  from { transform: translateY(5px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Hero Mascot */
+.heroVisual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.mascotWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 1;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  animation: float 6s ease-in-out infinite;
+}
+
+.mascotWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@media (max-width: 992px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .heroContent {
+    align-items: center;
+  }
+  
+  .heroDesc {
+    margin: 0 auto;
+  }
+
+  .caContainer {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .heroCtas {
+    justify-content: center;
+  }
+}
+
+/* Game / Interactivity Section */
+.gameContainer {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.gameDashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.gameTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.gameControls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 1.5rem;
+}
+
+.scoreRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1rem;
+}
+
+.scoreLabel {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(241, 241, 246, 0.5);
+}
+
+.scoreValue {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: hsl(var(--accent-cyan));
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+}
+
+.clickQuote {
+  font-style: italic;
+  color: hsl(var(--accent-pink));
+  font-size: 0.95rem;
+  height: 20px;
+  text-align: center;
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.milestoneHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: rgba(241, 241, 246, 0.6);
+}
+
+.progressTrack {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, hsl(var(--accent-purple)) 0%, hsl(var(--accent-cyan)) 100%);
+  border-radius: 9999px;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+/* Canvas Area */
+.canvasWrapper {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.08) 0%, rgba(10, 10, 15, 0.95) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 15px 40px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.canvasWrapper:hover {
+  border-color: hsl(var(--accent-cyan));
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 15px 45px rgba(6, 182, 212, 0.15);
+}
+
+.gameCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.clickPrompt {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.canvasWrapper:active .clickPrompt {
+  transform: scale(0.95);
+}
+
+.clickCircle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.1) 0%, rgba(139, 92, 246, 0.3) 100%);
+  border: 2px solid hsl(var(--accent-purple));
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.4), inset 0 0 15px rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  animation: pulse-glow 2s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    border-color: hsl(var(--accent-purple));
+  }
+  100% {
+    box-shadow: 0 0 35px rgba(6, 182, 212, 0.6);
+    border-color: hsl(var(--accent-cyan));
+  }
+}
+
+.clickCircleIcon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 8px #fff);
+  animation: wiggle 1.2s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.08); }
+}
+
+.clickCircleText {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+@media (max-width: 992px) {
+  .gameContainer {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .canvasWrapper {
+    max-width: 450px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+/* Tokenomics Section */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sectionTitle {
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+.tokenomicsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.tokenomicsCard {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tokenomicsLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(241, 241, 246, 0.5);
+}
+
+.tokenomicsValue {
+  font-size: 2rem;
+  font-weight: 850;
+  color: #fff;
+}
+
+/* How to Buy Section */
+.buyStepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.stepCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.stepNumber {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: hsl(var(--accent-cyan));
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+}
+
+.stepTitle {
+  font-size: 1.25rem;
+  font-weight: 750;
+  color: #fff;
+}
+
+/* Community / Social Card Grid */
+.communityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.socialCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.socialIconWrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.socialCard:hover .socialIconWrapper {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: hsl(var(--accent-purple));
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+.socialName {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  transition: color 0.2s ease;
+}
+
+.socialCard:hover .socialName {
+  color: hsl(var(--accent-cyan));
+}
+
+.socialDesc {
+  font-size: 0.85rem;
+  color: rgba(241, 241, 246, 0.55);
+}
+
+/* Footer styling */
+.footer {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3rem 0;
+  background: rgba(5, 5, 8, 0.8);
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footerText {
+  font-size: 0.9rem;
+  color: rgba(241, 241, 246, 0.5);
+}
+
+.footerCredits {
+  font-size: 0.9rem;
+  color: rgba(241, 241, 246, 0.4);
+}
+
+.footerCredits a {
+  color: hsl(var(--accent-purple));
+  text-decoration: none;
+}
+
+.footerCredits a:hover {
+  text-decoration: underline;
+  color: hsl(var(--accent-cyan));
+}
+
+@media (max-width: 576px) {
+  .footerContent {
+    flex-direction: column;
+    text-align: center;
+  }
+}
