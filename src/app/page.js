@@ -39,6 +39,31 @@ export default function Home() {
     if (savedClicks) setClicks(parseInt(savedClicks, 10));
   }, []);
 
+  // Scroll-reveal IntersectionObserver
+  useEffect(() => {
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else {
+            // Reset state if scrolled back up past the item
+            if (entry.boundingClientRect.top > 0) {
+              entry.target.classList.remove('visible');
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
+    );
+    
+    reveals.forEach((el) => observer.observe(el));
+    return () => {
+      reveals.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+
   // Update localStorage when values change
   const saveProgress = (newBags, newClicks) => {
     localStorage.setItem('bags_worked_count', newBags.toString());
@@ -376,7 +401,7 @@ export default function Home() {
         </section>
 
         {/* About / Meme Section */}
-        <section id="about" className={styles.section} aria-label="About the Project">
+        <section id="about" className={`${styles.section} reveal`} aria-label="About the Project">
           <div className={styles.sectionHeader}>
             <span className={styles.tagline} style={{ color: 'hsl(var(--accent-pink))' }}>Our Philosophy</span>
             <h2 className={styles.sectionTitle} id="about_section_title">NO HYPE, JUST WORK</h2>
@@ -392,7 +417,7 @@ export default function Home() {
         </section>
 
         {/* Interactive Clicker Game Section */}
-        <section id="game" className={styles.section} aria-label="Interactive Game Section">
+        <section id="game" className={`${styles.section} reveal`} aria-label="Interactive Game Section">
           <div className={styles.sectionHeader}>
             <span className={styles.tagline}>Proof of Grind</span>
             <h2 className={styles.sectionTitle} id="game_section_title">WORK FOR YOUR BAG</h2>
@@ -462,7 +487,7 @@ export default function Home() {
         </section>
 
         {/* Tokenomics Section */}
-        <section id="tokenomics" className={styles.section} aria-label="Tokenomics details">
+        <section id="tokenomics" className={`${styles.section} reveal`} aria-label="Tokenomics details">
           <div className={styles.sectionHeader}>
             <span className={styles.tagline} style={{ color: 'hsl(var(--accent-pink))' }}>Pure Tokenomics</span>
             <h2 className={styles.sectionTitle} id="tokenomics_section_title">BAG DISTRIBUTION</h2>
@@ -504,7 +529,7 @@ export default function Home() {
         </section>
 
         {/* How to Buy Section */}
-        <section id="buy" className={styles.section} aria-label="Buying guide">
+        <section id="buy" className={`${styles.section} reveal`} aria-label="Buying guide">
           <div className={styles.sectionHeader}>
             <span className={styles.tagline}>Quickstart</span>
             <h2 className={styles.sectionTitle} id="buy_section_title">HOW TO GET $WORKIN</h2>
@@ -546,7 +571,7 @@ export default function Home() {
         </section>
 
         {/* Community / Grid */}
-        <section id="community" className={styles.section} aria-label="Social connections">
+        <section id="community" className={`${styles.section} reveal`} aria-label="Social connections">
           <div className={styles.sectionHeader}>
             <span className={styles.tagline} style={{ color: 'hsl(var(--accent-cyan))' }}>Join the Movement</span>
             <h2 className={styles.sectionTitle} id="community_section_title">OUR CHANNELS</h2>

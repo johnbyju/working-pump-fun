@@ -827,3 +827,59 @@
   background: #000000;
   border-color: hsl(var(--accent-cyan));
 }
+
+/* Mobile Responsiveness Improvements */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.8rem;
+  }
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+  .tagline {
+    font-size: 0.8rem;
+  }
+  .section {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .splitWidget {
+    max-width: 310px;
+    border-width: 3px;
+    border-radius: 20px;
+  }
+  .splitTextLeft {
+    font-size: 2.2rem;
+  }
+  .splitTextRight {
+    font-size: 1.8rem;
+  }
+  .splitLeft {
+    padding-right: 0.75rem;
+  }
+  .splitRight {
+    padding-left: 0.75rem;
+  }
+  .tapIndicator {
+    bottom: 1rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.65rem;
+  }
+  
+  .caValue {
+    font-size: 0.8rem;
+  }
+  .caContainer {
+    padding: 1rem;
+    border-radius: 14px;
+  }
+  .caNetwork {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+  }
+  .copyBtn {
+    padding: 0.5rem;
+  }
+}
