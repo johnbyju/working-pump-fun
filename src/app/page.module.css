@@ -118,24 +118,43 @@
 }
 
 /* CA Copier Dashboard */
+/* CA Copier Dashboard */
 .caContainer {
-  background: rgba(13, 13, 20, 0.8);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 16px;
-  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, rgba(13, 13, 20, 0.9) 0%, rgba(20, 20, 35, 0.7) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  padding: 1.25rem 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   max-width: 550px;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   position: relative;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(139, 92, 246, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.caContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent-cyan)), hsl(var(--accent-purple)), transparent);
+  animation: caGlow 3s linear infinite;
+}
+
+@keyframes caGlow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .caContainer:hover {
-  border-color: rgba(6, 182, 212, 0.4);
-  box-shadow: 0 4px 25px rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 15px 35px rgba(6, 182, 212, 0.15), inset 0 0 20px rgba(6, 182, 212, 0.05);
+  transform: translateY(-2px);
 }
 
 .caHeader {
@@ -146,47 +165,72 @@
 
 .caLabel {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(241, 241, 246, 0.5);
+  letter-spacing: 0.12em;
+  color: rgba(241, 241, 246, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.caLabel::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
 }
 
 .caNetwork {
   font-size: 0.75rem;
-  font-weight: 700;
-  color: hsl(var(--accent-purple));
-  background: rgba(139, 92, 246, 0.1);
-  padding: 0.2rem 0.6rem;
+  font-weight: 800;
+  color: hsl(var(--accent-cyan));
+  background: rgba(6, 182, 212, 0.1);
+  padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .caValueRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .caValue {
   font-family: var(--font-mono);
-  font-size: 1rem;
-  color: hsl(var(--accent-cyan));
-  letter-spacing: 0.02em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.03em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
   width: 100%;
+  transition: color 0.2s ease;
+}
+
+.caValue:hover {
+  color: hsl(var(--accent-cyan));
 }
 
 .copyBtn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
   color: #fff;
-  border-radius: 8px;
-  padding: 0.5rem;
+  border-radius: 10px;
+  padding: 0.6rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -195,23 +239,29 @@
 }
 
 .copyBtn:hover {
-  background: rgba(6, 182, 212, 0.1);
+  background: hsl(var(--accent-cyan));
   border-color: hsl(var(--accent-cyan));
-  color: hsl(var(--accent-cyan));
+  color: #000;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+  transform: scale(1.05);
+}
+
+.copyBtn:active {
+  transform: scale(0.95);
 }
 
 .copySuccessMessage {
   position: absolute;
-  right: 1.5rem;
-  top: -12px;
-  background: hsl(var(--accent-cyan));
+  right: 1.75rem;
+  top: -10px;
+  background: linear-gradient(135deg, hsl(var(--accent-cyan)), #10b981);
   color: #000;
   font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.25rem 0.6rem;
-  border-radius: 4px;
-  box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4);
-  animation: slideIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-weight: 800;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(6, 182, 212, 0.3);
+  animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes slideIn {
@@ -639,4 +689,141 @@
     flex-direction: column;
     text-align: center;
   }
+}
+
+/* Custom Interactive Split-Screen Widget */
+.splitWidget {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  border-radius: 32px;
+  overflow: hidden;
+  border: 4px solid #000000;
+  background-color: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  user-select: none;
+  animation: float 6s ease-in-out infinite;
+  display: flex;
+  z-index: 10;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.splitWidget:hover {
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(139, 92, 246, 0.3);
+}
+
+.splitWidget:active {
+  transform: scale(0.97);
+}
+
+.splitContent {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.splitSide {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  position: relative;
+  z-index: 2;
+  transition: background-color 0.3s ease;
+}
+
+.splitLeft {
+  padding-right: 1.5rem;
+}
+
+.splitRight {
+  padding-left: 1.5rem;
+}
+
+.splitTextLeft {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 3.4rem;
+  font-weight: 900;
+  color: #000000;
+  letter-spacing: -0.04em;
+  text-align: right;
+  width: 100%;
+  transition: transform 0.3s var(--ease-custom);
+}
+
+.splitTextRight {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 2.8rem;
+  font-weight: 500;
+  color: #000000;
+  letter-spacing: -0.02em;
+  text-align: left;
+  width: 100%;
+  transition: transform 0.3s var(--ease-custom);
+}
+
+.splitWidget:hover .splitTextLeft {
+  transform: translateX(-4px);
+}
+
+.splitWidget:hover .splitTextRight {
+  transform: translateX(4px);
+}
+
+.splitDivider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background-color: #000000;
+  z-index: 5;
+  transition: transform 0.3s var(--ease-custom);
+}
+
+.splitWidget:hover .splitDivider {
+  transform: scaleY(1.05);
+}
+
+/* Canvas Overlay inside split widget for particles */
+.splitCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* Tap Overlay Indicator */
+.tapIndicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 99px;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.splitWidget:hover .tapIndicator {
+  opacity: 1;
+  background: #000000;
+  border-color: hsl(var(--accent-cyan));
 }

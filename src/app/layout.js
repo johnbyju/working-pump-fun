@@ -14,21 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "$BAGS Coin | We Work For Our Bags",
-  description: "Welcome to $BAGS, the community-driven memecoin where we work for our bags! Get the Contract Address (CA), track charts, and participate in our interactive bag builder.",
-  keywords: ["$BAGS", "Bags Coin", "We Work For Our Bags", "Crypto Bags", "Meme Coin", "Solana Bags", "Community Coin"],
-  authors: [{ name: "Bags Core Team" }],
+  title: "Working Coin | $WORKIN - We Work For Our Bags",
+  description: "Welcome to Working Coin ($WORKIN), the community-driven memecoin where we work for our bags! Get the Contract Address (CA), track charts, and play the interactive split clicker.",
+  keywords: ["$WORKIN", "Working Coin", "ORKIN", "We Work For Our Bags", "Crypto Bags", "Meme Coin", "Solana Working", "Community Coin"],
+  authors: [{ name: "Working Core Team" }],
   openGraph: {
-    title: "$BAGS Coin | We Work For Our Bags",
-    description: "Welcome to $BAGS, the community-driven memecoin where we work for our bags! Join the movement, copy the CA, and start clicking.",
+    title: "Working Coin | $WORKIN - We Work For Our Bags",
+    description: "Welcome to Working Coin ($WORKIN), the community-driven memecoin where we work for our bags! Join the movement, copy the CA, and start working.",
     url: "https://johnbyju.github.io/coin-website",
-    siteName: "$BAGS Coin",
+    siteName: "Working Coin",
     images: [
       {
         url: "/assets/images/mascot.png",
         width: 1024,
         height: 1024,
-        alt: "$BAGS Cyber Bag Mascot",
+        alt: "$WORKIN Coin Logo",
       },
     ],
     locale: "en_US",
@@ -36,8 +36,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "$BAGS Coin | We Work For Our Bags",
-    description: "Welcome to $BAGS, the community-driven memecoin where we work for our bags! Join the movement, copy the CA, and start clicking.",
+    title: "Working Coin | $WORKIN - We Work For Our Bags",
+    description: "Welcome to Working Coin ($WORKIN), the community-driven memecoin where we work for our bags! Join the movement, copy the CA, and start working.",
     images: ["/assets/images/mascot.png"],
   },
 };

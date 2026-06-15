@@ -1,21 +1,20 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import styles from './page.module.css';
 
 // Motivational quotes when clicking to "Work for Your Bag"
 const MOTIVATIONAL_QUOTES = [
-  "Working hard for our bags! 💼",
-  "No handouts, just grind! 🔥",
-  "Stacking bags taller! 📈",
-  "Bags are getting heavy! 🏋️‍♂️",
+  "ORKIN' hard for our bags! 💼",
   "Hustle never sleeps! ⚡",
+  "We work for it, no handouts! 🔥",
+  "Accumulating $WORKIN bags! 📈",
+  "Bags are getting heavy! 🏋️‍♂️",
   "Community power in progress! 🌐",
   "Keep clicking, keep building! 🛠️",
-  "Your bag is expanding! 💰",
   "Diamond hands working! 💎",
-  "Pumping the bags! 🚀"
+  "Working hard, working smart! 🚀",
+  "Proof of Grind in action! 🦾"
 ];
 
 const CONTRACT_ADDRESS = "BagsUn1tE4mP8sT9wQ2yZ7cX3vB5nM1kL0jH8gF6d";
@@ -24,10 +23,12 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [bagCount, setBagCount] = useState(0);
   const [clicks, setClicks] = useState(0);
-  const [activeQuote, setActiveQuote] = useState("Click the bag to start working!");
+  const [activeQuote, setActiveQuote] = useState("Click the screen to start working!");
   
-  const canvasRef = useRef(null);
-  const particlesRef = useRef([]);
+  const heroCanvasRef = useRef(null);
+  const gameCanvasRef = useRef(null);
+  const heroParticlesRef = useRef([]);
+  const gameParticlesRef = useRef([]);
   const animationFrameRef = useRef(null);
 
   // Initialize and load saved bag progress from localStorage on client-side
@@ -74,27 +75,43 @@ export default function Home() {
 
   // Canvas particle engine animation loop
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
+    const heroCanvas = heroCanvasRef.current;
+    const gameCanvas = gameCanvasRef.current;
     
-    // Resize handler to match logical sizes
-    const resizeCanvas = () => {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+    const heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
+    const gameCtx = gameCanvas ? gameCanvas.getContext('2d') : null;
+    
+    // Resize handler to match parent elements
+    const resizeCanvases = () => {
+      if (heroCanvas) {
+        const rect = heroCanvas.parentElement.getBoundingClientRect();
+        heroCanvas.width = rect.width;
+        heroCanvas.height = rect.height;
+      }
+      if (gameCanvas) {
+        const rect = gameCanvas.parentElement.getBoundingClientRect();
+        gameCanvas.width = rect.width;
+        gameCanvas.height = rect.height;
+      }
     };
     
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    resizeCanvases();
+    window.addEventListener('resize', resizeCanvases);
 
     const animate = () => {
-      // Clear canvas with trace transparency for slight trailing
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (heroCanvas && heroCtx) {
+        heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+        updateAndDrawParticles(heroCtx, heroParticlesRef.current);
+      }
+      if (gameCanvas && gameCtx) {
+        gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+        updateAndDrawParticles(gameCtx, gameParticlesRef.current);
+      }
       
-      const particles = particlesRef.current;
-      
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    const updateAndDrawParticles = (ctx, particles) => {
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         
@@ -157,20 +174,18 @@ export default function Home() {
         
         ctx.restore();
       }
-      
-      animationFrameRef.current = requestAnimationFrame(animate);
     };
     
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('resize', resizeCanvases);
       cancelAnimationFrame(animationFrameRef.current);
     };
   }, []);
 
-  const handleCanvasClick = (e) => {
-    const canvas = canvasRef.current;
+  const handleWidgetClick = (e, targetType) => {
+    const canvas = targetType === 'hero' ? heroCanvasRef.current : gameCanvasRef.current;
     if (!canvas) return;
     
     // Get mouse position relative to canvas
@@ -193,24 +208,26 @@ export default function Home() {
     setActiveQuote(randQuote);
     
     // Spawn Coins and Sparkles
-    const particles = particlesRef.current;
+    const particles = targetType === 'hero' ? heroParticlesRef.current : gameParticlesRef.current;
     
-    // Spawn 1 big coin
-    particles.push({
-      x: clickX,
-      y: clickY,
-      vx: (Math.random() - 0.5) * 6,
-      vy: -5 - Math.random() * 5,
-      gravity: 0.25,
-      radius: 12 + Math.random() * 6,
-      life: 0,
-      alpha: 1,
-      rotation: Math.random() * Math.PI,
-      rotSpeed: (Math.random() - 0.5) * 0.2,
-      type: 'coin'
-    });
+    // Spawn 2 coins
+    for (let i = 0; i < 2; i++) {
+      particles.push({
+        x: clickX,
+        y: clickY,
+        vx: (Math.random() - 0.5) * 6,
+        vy: -5 - Math.random() * 5,
+        gravity: 0.25,
+        radius: 10 + Math.random() * 5,
+        life: 0,
+        alpha: 1,
+        rotation: Math.random() * Math.PI,
+        rotSpeed: (Math.random() - 0.5) * 0.2,
+        type: 'coin'
+      });
+    }
     
-    // Spawn 4-5 neon sparks
+    // Spawn 5 neon sparks
     const colors = ['#8b5cf6', '#06b6d4', '#ec4899', '#3b82f6'];
     for (let i = 0; i < 5; i++) {
       particles.push({
@@ -242,11 +259,11 @@ export default function Home() {
       <header className={styles.header}>
         <div className={`${styles.nav} container`}>
           <a href="#" className={styles.logo} id="nav_logo_bags">
-            $BAGS COIN
+            $WORKIN COIN
           </a>
           <nav className={styles.navLinks} aria-label="Main Navigation">
             <a href="#about" className={styles.navLink} id="nav_link_about">About</a>
-            <a href="#game" className={styles.navLink} id="nav_link_work">Work for Bags</a>
+            <a href="#game" className={styles.navLink} id="nav_link_work">Work for $WORKIN</a>
             <a href="#tokenomics" className={styles.navLink} id="nav_link_tokenomics">Tokenomics</a>
             <a href="#buy" className={styles.navLink} id="nav_link_buy">How to Buy</a>
             <a href="#community" className={styles.navLink} id="nav_link_community">Community</a>
@@ -258,7 +275,7 @@ export default function Home() {
               style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}
               id="nav_buy_button"
             >
-              Buy $BAGS
+              Buy $WORKIN
             </a>
           </div>
         </div>
@@ -278,7 +295,7 @@ export default function Home() {
               WE WORK FOR <span className="gradient-text">OUR BAGS</span>
             </h1>
             <p className={styles.heroDesc}>
-              The ultimate community-powered digital currency. We don&apos;t expect moonshots from thin air. We code, we create, we click, and we hustle. No handouts, just pure community energy.
+              The ultimate community-powered digital currency. We don&apos;t expect moonshots from thin air. We code, we build, we coordinate, and we hustle. No handouts, just pure community energy.
             </p>
             
             {/* Contract Address Dashboard */}
@@ -308,6 +325,20 @@ export default function Home() {
                   </svg>
                 </button>
               </div>
+              
+              {/* Badges status row */}
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.15rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(16, 185, 129, 0.2)', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981', textTransform: 'uppercase' }}>
+                  LP 100% Burned
+                </span>
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.15rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(6, 182, 212, 0.2)', backgroundColor: 'rgba(6, 182, 212, 0.1)', color: 'hsl(var(--accent-cyan))', textTransform: 'uppercase' }}>
+                  Tax: 0/0
+                </span>
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.15rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(139, 92, 246, 0.2)', backgroundColor: 'rgba(139, 92, 246, 0.1)', color: 'hsl(var(--accent-purple))', textTransform: 'uppercase' }}>
+                  Renounced
+                </span>
+              </div>
+              
               {copied && (
                 <div className={styles.copySuccessMessage} id="ca_copy_success">
                   Copied!
@@ -321,18 +352,25 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Glowing spinning Mascot */}
+          {/* Interactive Split-Screen Widget */}
           <div className={styles.heroVisual}>
-            <div className={styles.mascotWrapper}>
-              <Image 
-                src="/assets/images/mascot.png" 
-                alt="$BAGS Cyber Bag overflowing with crypto gold coins"
-                width={380}
-                height={380}
-                priority
-                style={{ objectFit: 'cover', display: 'block' }}
-                id="hero_mascot_image"
-              />
+            <div 
+              className={styles.splitWidget}
+              onClick={(e) => handleWidgetClick(e, 'hero')}
+              id="hero_split_widget"
+              aria-label="Interactive ORKIN Working split screen graphic"
+            >
+              <canvas ref={heroCanvasRef} className={styles.splitCanvas} />
+              <div className={styles.splitContent}>
+                <div className={`${styles.splitSide} ${styles.splitLeft}`}>
+                  <span className={styles.splitTextLeft}>ORKIN</span>
+                </div>
+                <div className={styles.splitDivider} />
+                <div className={`${styles.splitSide} ${styles.splitRight}`}>
+                  <span className={styles.splitTextRight}>Working</span>
+                </div>
+              </div>
+              <div className={styles.tapIndicator}>Tap to Work</div>
             </div>
           </div>
         </section>
@@ -348,7 +386,7 @@ export default function Home() {
               Memecoins have lost their spirit. The original spirit was built on communities aligning together, sharing a common vision, and working collectively for their bags. 
             </p>
             <p style={{ fontSize: '1.1rem', color: 'rgba(241, 241, 246, 0.65)' }}>
-              We created <strong>$BAGS</strong> to bring that back. We provide an interactive space where you can literally manifest your bags through focus and play. Buy your portion, support the network, tell the world, and grind. The heavier your bag, the stronger the community.
+              We created <strong>$WORKIN</strong> to bring that back. We provide an interactive space where you can literally manifest your bags through focus and play. Buy your portion, support the network, tell the world, and grind. The heavier your bag, the stronger the community.
             </p>
           </div>
         </section>
@@ -364,13 +402,13 @@ export default function Home() {
             <div className={styles.gameDashboard}>
               <h3 className="gradient-text" style={{ fontSize: '1.8rem', fontWeight: 800 }}>Manifest your stack</h3>
               <p>
-                Click inside the cyber energetic shield on the right. Each tap synthesizes 8-bit digital chimes and launches gold coins into the vault, simulating community work block validation. Your progress is saved locally.
+                Click inside the interactive split widget on the right. Each tap synthesizes 8-bit digital chimes and launches gold coins into the vault, simulating community work block validation. Your progress is saved locally.
               </p>
               
               <div className={styles.gameControls} id="game_dashboard_panel">
                 <div className={styles.scoreRow}>
                   <span className={styles.scoreLabel}>Your Accumulated Bags</span>
-                  <span className={styles.scoreValue} id="game_bag_counter">{bagCount.toLocaleString()} $BAGS</span>
+                  <span className={styles.scoreValue} id="game_bag_counter">{bagCount.toLocaleString()} $WORKIN</span>
                 </div>
                 <div className={styles.scoreRow} style={{ borderBottom: 'none', paddingBottom: 0 }}>
                   <span className={styles.scoreLabel}>Total Sessions Taps</span>
@@ -398,19 +436,26 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Click Board Canvas */}
-            <div 
-              className={styles.canvasWrapper} 
-              onClick={handleCanvasClick}
-              id="game_click_target"
-            >
-              <canvas ref={canvasRef} className={styles.gameCanvas} />
-              
-              <div className={styles.clickPrompt}>
-                <div className={styles.clickCircle}>
-                  <div className={styles.clickCircleIcon} aria-hidden="true">💼</div>
+            {/* Click Board Split Widget */}
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div 
+                className={styles.splitWidget} 
+                onClick={(e) => handleWidgetClick(e, 'game')}
+                id="game_click_target"
+                style={{ animationDelay: '-3s' }} 
+                aria-label="Interactive click game target"
+              >
+                <canvas ref={gameCanvasRef} className={styles.splitCanvas} />
+                <div className={styles.splitContent}>
+                  <div className={`${styles.splitSide} ${styles.splitLeft}`}>
+                    <span className={styles.splitTextLeft}>ORKIN</span>
+                  </div>
+                  <div className={styles.splitDivider} />
+                  <div className={`${styles.splitSide} ${styles.splitRight}`}>
+                    <span className={styles.splitTextRight}>Working</span>
+                  </div>
                 </div>
-                <div className={styles.clickCircleText}>Tap to Hustle</div>
+                <div className={styles.tapIndicator}>Tap to Grind</div>
               </div>
             </div>
           </div>
@@ -462,7 +507,7 @@ export default function Home() {
         <section id="buy" className={styles.section} aria-label="Buying guide">
           <div className={styles.sectionHeader}>
             <span className={styles.tagline}>Quickstart</span>
-            <h2 className={styles.sectionTitle} id="buy_section_title">HOW TO GET $BAGS</h2>
+            <h2 className={styles.sectionTitle} id="buy_section_title">HOW TO GET $WORKIN</h2>
           </div>
           
           <div className={styles.buyStepsGrid}>
@@ -494,7 +539,7 @@ export default function Home() {
               <div className={styles.stepNumber}>04</div>
               <h3 className={styles.stepTitle}>Swap & Stack</h3>
               <p style={{ fontSize: '0.95rem' }}>
-                Swap your SOL for $BAGS. Hit confirm, let the transaction process, and start loading your heavy digital bag!
+                Swap your SOL for $WORKIN. Hit confirm, let the transaction process, and start loading your heavy digital bag!
               </p>
             </div>
           </div>
@@ -557,7 +602,7 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={`${styles.footerContent} container`}>
           <span className={styles.footerText} id="footer_copyright">
-            &copy; 2026 $BAGS Coin. We work for our bags.
+            &copy; 2026 $WORKIN. We work for our bags.
           </span>
           <span className={styles.footerCredits} id="footer_dev_link">
             Created in next.js for <a href="https://johnbyju.github.io" target="_blank" rel="noopener noreferrer">John Byju</a>
